@@ -32,7 +32,53 @@ function App() {
 
   const importCSV = e => { /* wie vorher */ };
 
-  const computeStats = () => { /* wie vorher */ };
+  const computeStats = () => {
+  return months.map(m => {
+    // Monatsanfang und Monatsende
+    const monthStart = m.date;
+    const monthEnd = new Date(
+      monthStart.getFullYear(),
+      monthStart.getMonth() + 1,
+      0
+    );
+    // Datum für den 5. des aktuellen Monats
+    const fifthOfMonth = new Date(
+      monthStart.getFullYear(),
+      monthStart.getMonth(),
+      5
+    );
+
+    const row = { month: m.label };
+
+    ['Gelb', 'Grün'].forEach(g => {
+      let occ = 0;
+      let count = 0;
+
+      kids
+        .filter(k => k.group === g)
+        .forEach(k => {
+          const b = new Date(k.birthday);
+          const s = new Date(k.start);
+          const e = k.end ? new Date(k.end) : null;
+
+          if (s <= monthEnd && (!e || e >= monthStart)) {
+            const ageAtFifth = (fifthOfMonth - b) / (1000 * 60 * 60 * 24 * 365.25);
+            occ += ageAtFifth < 3 ? 2 : 1;
+            count += 1;
+          }
+        });
+
+      row[`occ${g}`] = occ;
+      row[`count${g}`] = count;
+      row[`free${g}`] = 22 - occ;
+    });
+
+    row.occTotal = row.occGelb + row.occGrün;
+    row.freeTotal = 44 - row.occTotal;
+
+    return row;
+  });
+};
   const stats = useMemo(computeStats, [kids, months]);
 
   return (

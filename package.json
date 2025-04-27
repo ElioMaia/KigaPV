@@ -1,7 +1,7 @@
 {
   "name": "kigapv",
   "version": "0.1.0",
-  "homepage": "https://eliomaia.github.io/kigapv",
+  "homepage": "https://eliomaia.github.io/KigaPV",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
