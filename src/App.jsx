@@ -30,6 +30,24 @@ function App() {
     document.body.removeChild(link);
   };
 
+  const exportExcel = () => {
+    import('xlsx').then(xlsx => {
+      const wb = xlsx.utils.book_new();
+
+      // Kids Sheet
+      const kidsHeaders = ['id','name','birthday','start','end','group'];
+      const kidsRows = kids.map(k => kidsHeaders.map(h => k[h] || ''));
+      xlsx.utils.book_append_sheet(wb, xlsx.utils.aoa_to_sheet([kidsHeaders, ...kidsRows]), 'Kids');
+
+      // Stats Sheet
+      const statsHeaders = Object.keys(stats[0] || {});
+      const statsRows = stats.map(s => statsHeaders.map(h => s[h] || ''));
+      xlsx.utils.book_append_sheet(wb, xlsx.utils.aoa_to_sheet([statsHeaders, ...statsRows]), 'Stats');
+
+      xlsx.writeFile(wb, 'kiga_data.xlsx');
+    });
+  };
+
   const importCSV = (e) => {
   const file = e.target.files[0];
   if (!file) return;
@@ -116,6 +134,7 @@ function App() {
           {years.map(y=><option key={y} value={y}>{y}/{y+1}</option>)}
         </select>
         <button onClick={exportCSV} className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 transition">Export CSV</button>
+        <button onClick={exportExcel} className="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700 transition">Export XLSX</button>
         <label className="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition cursor-pointer">
           Import CSV
           <input type="file" accept=".csv" onChange={importCSV} className="hidden" />
