@@ -30,7 +30,33 @@ function App() {
     document.body.removeChild(link);
   };
 
-  const importCSV = e => { /* wie vorher */ };
+  const importCSV = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (evt) => {
+    const text = evt.target.result;
+    const [headerLine, ...lines] = text.split(/\r?\n/);
+    const headers = headerLine.split(',');
+    const imported = lines
+      .filter(line => line.trim() !== '')
+      .map(line => {
+        const values = line.split(',');
+        const obj = headers.reduce((acc, h, i) => {
+          acc[h] = values[i];
+          return acc;
+        }, {});
+        return {
+          ...obj,
+          id: Number(obj.id) || Date.now() + Math.random()
+        };
+      });
+    setKids(prev => [...prev, ...imported]);
+  };
+  reader.readAsText(file);
+  // Damit dieselbe Datei erneut importiert werden kann:
+  e.target.value = null;
+};
 
   const computeStats = () => {
   return months.map(m => {
