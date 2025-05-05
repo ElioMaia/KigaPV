@@ -1,13 +1,15 @@
 {
   "files": {
     "main.css": "/KigaPV/static/css/main.9ce17da5.css",
-    "main.js": "/KigaPV/static/js/main.1499f607.js",
+    "main.js": "/KigaPV/static/js/main.158cb862.js",
+    "static/js/238.0e124804.chunk.js": "/KigaPV/static/js/238.0e124804.chunk.js",
     "index.html": "/KigaPV/index.html",
     "main.9ce17da5.css.map": "/KigaPV/static/css/main.9ce17da5.css.map",
-    "main.1499f607.js.map": "/KigaPV/static/js/main.1499f607.js.map"
+    "main.158cb862.js.map": "/KigaPV/static/js/main.158cb862.js.map",
+    "238.0e124804.chunk.js.map": "/KigaPV/static/js/238.0e124804.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9ce17da5.css",
-    "static/js/main.1499f607.js"
+    "static/js/main.158cb862.js"
   ]
 }
